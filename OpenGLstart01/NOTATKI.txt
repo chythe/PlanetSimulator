@@ -1,0 +1,14 @@
+promien/ rozmiar s³oñca w blenderze =4 
+promien ziemi 1
+promien sand 1.5 
+stars 2
+
+venus 1.2
+blue 1.7
+purple 2.5
+moon 3.5
+red 0.5
+green 3
+
+wszystko dziala tzn. jezeli mamy red.dae to nie ma problemu, zeby jako teksture zaladowac np green.jpg wszystko sie dopasowuje, wiec mozna dodac
+mozliwosc wyboru , tak naprawde mozna bylo zrobic kilka planet o roznych rozmiarach i jez zamapowac
