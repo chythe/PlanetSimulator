@@ -2,7 +2,7 @@
 #include "Dependencies\glm\glm.hpp"
 
 
-
+// DEPRECATED
 class Vertex{
 	
 

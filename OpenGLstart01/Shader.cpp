@@ -1,8 +1,10 @@
 #include "Shader.h"
 
+
 Shader::Shader(){
 
 }
+
 
 
 Shader::Shader(std::string fileLocation){
@@ -14,6 +16,7 @@ Shader::Shader(std::string fileLocation){
 	}
 }
 
+
 Shader::~Shader(){
 	glUseProgram(0); //z argumentem 0 mówi maszynie stanów, ¿e nie bêd¹ u¿ywane dane shadery,
 	for (int i = 0; i < NUM_TYPES; i++){
@@ -22,6 +25,7 @@ Shader::~Shader(){
 
 	glDeleteProgram(program);
 }
+
 
 
 bool Shader::loadFromFile(std::string fileLocation){
@@ -80,6 +84,7 @@ bool Shader::loadFromFile(std::string fileLocation){
 	return 1;
 }
 
+
 void Shader::checkError(GLuint handle, bool isProgram, GLenum status, std::string errorMsg){
 	GLint result;
 	GLchar error[1024] ={0};
@@ -102,6 +107,7 @@ void Shader::checkError(GLuint handle, bool isProgram, GLenum status, std::strin
 	}
 }
 
+
 std::string Shader::loadShader(std::string fileLocation){
 	std::string line;
 	std::string content;
@@ -117,6 +123,7 @@ std::string Shader::loadShader(std::string fileLocation){
 	return content;
 
 }
+
 void Shader::setTextureIndex(int index){
 	glUniform1i(textureIndexUniform, index); //t¹ funkcje wywolujemy dopiero po zbidnowaniu tzn po glUseProgram
 }
@@ -132,12 +139,14 @@ void Shader::Update(Transform * currentTransform, Camera * currentCamera){
 
 }
 
+
 void Shader::updateLightning(glm::vec3 objectAmbientFactor, glm::vec3 objectDiffuseFactor, glm::vec3 objectSpecularFactor){
 	glUniform3fv(objectAmbientFactorUniform, 1, glm::value_ptr(objectAmbientFactor));
 	glUniform3fv(objectDiffuseFactorUniform,1, glm::value_ptr(objectDiffuseFactor));
 	glUniform3fv(objectSpecularFactorUniform, 1, glm::value_ptr(objectSpecularFactor));
 	
 }
+
 
 void Shader::Bind(){
 	glUseProgram(program);

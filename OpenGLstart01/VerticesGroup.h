@@ -2,6 +2,8 @@
 #include "Vertex.h"
 #include <iostream>
 
+
+// DEPRECATED
 enum  VERTICES_TYPE { texture,color };
 
 class VerticesGroup{

@@ -2,6 +2,8 @@
 #include "Dependencies\glew\glew.h"
 #include "VerticesGroup.h"
 
+
+// DEPRECATED
 class Mesh{
 	unsigned int verticesCount;
 	GLuint vertexBuffer;

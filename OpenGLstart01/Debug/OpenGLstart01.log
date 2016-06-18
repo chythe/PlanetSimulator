@@ -1,9 +1,9 @@
-﻿Build started 2016-06-02 17:54:40.
-     1>Project "C:\Users\chythe\Documents\OpenGLstart01\OpenGLstart01\OpenGLstart01.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2016-06-17 19:00:35.
+     1>Project "D:\projektyProgramistyczne\C PROJEKTY\OpenGL\ProjektGK-master\ProjektGK\OpenGLstart01\OpenGLstart01.vcxproj" on node 2 (Build target(s)).
      1>Link:
-         OpenGLstart01.vcxproj -> C:\Users\chythe\Documents\OpenGLstart01\Debug\OpenGLstart01.exe
-     1>Done Building Project "C:\Users\chythe\Documents\OpenGLstart01\OpenGLstart01\OpenGLstart01.vcxproj" (Build target(s)).
+         OpenGLstart01.vcxproj -> D:\projektyProgramistyczne\C PROJEKTY\OpenGL\ProjektGK-master\ProjektGK\Debug\OpenGLstart01.exe
+     1>Done Building Project "D:\projektyProgramistyczne\C PROJEKTY\OpenGL\ProjektGK-master\ProjektGK\OpenGLstart01\OpenGLstart01.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.87
+Time Elapsed 00:00:00.10
