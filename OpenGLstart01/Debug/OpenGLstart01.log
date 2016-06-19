@@ -1,9 +1,33 @@
-﻿Build started 2016-06-17 19:00:35.
-     1>Project "D:\projektyProgramistyczne\C PROJEKTY\OpenGL\ProjektGK-master\ProjektGK\OpenGLstart01\OpenGLstart01.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         OpenGLstart01.vcxproj -> D:\projektyProgramistyczne\C PROJEKTY\OpenGL\ProjektGK-master\ProjektGK\Debug\OpenGLstart01.exe
-     1>Done Building Project "D:\projektyProgramistyczne\C PROJEKTY\OpenGL\ProjektGK-master\ProjektGK\OpenGLstart01\OpenGLstart01.vcxproj" (Build target(s)).
+﻿Build started 2016-06-19 21:24:45.
+     1>Project "C:\Users\chythe\Documents\ProjektGK\OpenGLstart01\OpenGLstart01.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\chythe\Documents\ProjektGK\packages\Assimp.3.0.0\build\native\../..//build/native/include/ /I"D:\projektyProgramistyczne\C PROJEKTY\OpenGL\OpenGLstart01\OpenGLstart01\Dependencies\freeglut" /I"D:\projektyProgramistyczne\C PROJEKTY\OpenGL\OpenGLstart01\OpenGLstart01\Dependencies\glew" /I"D:\projektyProgramistyczne\C PROJEKTY\OpenGL\OpenGLstart01\OpenGLstart01\Dependencies\glfw" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\chythe\documents\projektgk\openglstart01\main.cpp(106): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\chythe\documents\projektgk\openglstart01\main.cpp(109): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\chythe\documents\projektgk\openglstart01\main.cpp(112): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\chythe\documents\projektgk\openglstart01\main.cpp(115): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\chythe\documents\projektgk\openglstart01\main.cpp(129): warning C4316: 'Planet' : object allocated on the heap may not be aligned 16
+     1>c:\users\chythe\documents\projektgk\openglstart01\main.cpp(248): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>c:\users\chythe\documents\projektgk\openglstart01\main.cpp(250): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>c:\users\chythe\documents\projektgk\openglstart01\main.cpp(49): warning C4930: 'Planet objPlanet(void)': prototyped function not called (was a variable definition intended?)
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\chythe\Documents\ProjektGK\Debug\OpenGLstart01.exe" /INCREMENTAL /NOLOGO /LIBPATH:Dependencies\assimp /LIBPATH:Dependencies\freeImage /LIBPATH:Dependencies\glm /LIBPATH:Dependencies\freeglut /LIBPATH:Dependencies\glew /LIBPATH:Dependencies\glfw C:\Users\chythe\Documents\ProjektGK\packages\Assimp.3.0.0\build\native\../..//build/native/lib/Win32\assimp.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib assimp.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib opengl32.lib freeglut.lib glew32.lib glfw3.lib FreeImage.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\chythe\Documents\ProjektGK\Debug\OpenGLstart01.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\chythe\Documents\ProjektGK\Debug\OpenGLstart01.lib" /MACHINE:X86 Debug\Camera.obj
+         Debug\Keyboard.obj
+         Debug\main.obj
+         Debug\Model.obj
+         Debug\Mouse.obj
+         Debug\MovementParameters.obj
+         Debug\Planet.obj
+         Debug\Shader.obj
+         Debug\Mesh.obj
+         Debug\Texture.obj
+         Debug\Transform.obj
+         Debug\Vertex.obj
+         Debug\VerticesGroup.obj
+         OpenGLstart01.vcxproj -> C:\Users\chythe\Documents\ProjektGK\Debug\OpenGLstart01.exe
+     1>Done Building Project "C:\Users\chythe\Documents\ProjektGK\OpenGLstart01\OpenGLstart01.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.10
+Time Elapsed 00:00:03.20

@@ -100,6 +100,7 @@
     <ClInclude Include="MovementParameters.h">
       <Filter>Core\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Samochod.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Vertex_Shader.glsl">
