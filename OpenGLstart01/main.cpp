@@ -18,6 +18,7 @@
 #include "MovementParameters.h"
 
 #include <iostream>
+#include <vector>
 
 
 
@@ -36,9 +37,16 @@ Camera camera;
 Keyboard keyboard;
 Mouse mouse;
 
+int numberModels = 4;
+int numberPlanets = 4;
+
+enum Type {
+    SUN, GREEN, SAND, MOON
+};
+
 int main(){
 
-	
+    Planet objPlanet();
 
 	//inicjalizacja glfw
 	if (!glfwInit()){
@@ -83,11 +91,6 @@ int main(){
 	}	
 	glViewport(0, 0, 800, 600); // wskazujemy gdzie znajduje sie lewy gorny róg oraz rozmiar okna, mo¿na to chyba pomin¹æ
 
-	
-	
-
-	
-
 
 	
 	Shader modelShader("shaders/simpleModel");
@@ -95,36 +98,48 @@ int main(){
 	modelShader.Bind();
 	
 
-	
-
-	Model model("Models/Sun/sun.dae");
-	Model model2("Models/Green/green.dae");
-	Model model3("Models/Sand/sand.dae");
-	Model model4("Models/Moon/moon.dae");
-
+    std::vector<Model*> models;
+    for (int i = 0; i < numberModels; i++){
+        switch (i)
+        {
+        case SUN:
+            models.push_back(new Model("Models/Sun/sun.dae"));
+            break;
+        case GREEN:
+            models.push_back(new Model("Models/Green/green.dae"));
+            break;
+        case SAND:
+            models.push_back(new Model("Models/Sand/sand.dae"));
+            break;
+        case MOON:
+            models.push_back(new Model("Models/Moon/moon.dae"));
+            break;
+        }
+    }
 
 	//Model farmModel("Models/Test/test/test2.dae");
 	//Transform farmTransform;
 	//farmTransform.setPosition(glm::vec3(0.0, 0.0, 0.0));
 	//farmTransform.update();
 
+
+    std::vector<Planet*> planets;
+    for (int i = 0; i < numberPlanets; i++){
+
+        planets.push_back(new Planet(models[i], &modelShader));
+    }
 	
-	Planet planet4(&model4, &modelShader);
-	Planet planet3(&model3, &modelShader);
-	Planet planet2(&model2,&modelShader);
-	Planet planet(&model,&modelShader);
-	
 
 
-	planet4.setLightningParameters(glm::vec3(0.1, 0.1, 0.1), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0));
-	planet3.setLightningParameters(glm::vec3(0.1, 0.1, 0.1), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0));
-	planet2.setLightningParameters(glm::vec3(0.1, 0.1, 0.1), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0));
-	planet.setLightningParameters(glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0));
+	planets[MOON]->setLightningParameters(glm::vec3(0.1, 0.1, 0.1), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0));
+	planets[SAND]->setLightningParameters(glm::vec3(0.1, 0.1, 0.1), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0));
+	planets[GREEN]->setLightningParameters(glm::vec3(0.1, 0.1, 0.1), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0));
+	planets[SUN]->setLightningParameters(glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0));
 
 
-	planet2.setStartingParameters(4.5 * 1000, 0,   100, glm::vec3(0.002, 0, 0));
-	planet3.setStartingParameters(4.6 * 1000, 0, 200000 * 1000, glm::vec3(0, 0, 0.009));
-	planet4.setStartingParameters(5 * 1000, 0,   15000 * 1000, glm::vec3(0, 0, 0.019));
+    planets[GREEN]->setStartingParameters(4.5 * 1000, 0, 100, 3.0, glm::vec3(0.002, 0, 0)); //green //100
+    planets[SAND]->setStartingParameters(4.6 * 1000, 0, 200000 * 1000, 1.5, glm::vec3(0, 0, 0.009)); //sand //300000 * 1000
+    planets[MOON]->setStartingParameters(5 * 1000, 0, 800000 * 1000, 3.5, glm::vec3(0, 0, 0.019)); //moon //800000 * 1000
 	
 
 	glEnable(GL_DEPTH_TEST);
@@ -220,15 +235,9 @@ int main(){
 
 	while (!glfwWindowShouldClose(window))
 	{
-		
-
-		
-		
-		
-
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);  // to konfiguruje kolor jaki uzyskamy po wywo³aniu glClear
-		glViewport(0, 0, window_width, window_height);// aktualizacja rozmiaru rzutni
+		glViewport(0, 0, window_width, window_height); // aktualizacja rozmiaru rzutni
 
 
 		previousTime = actualTime;
@@ -256,20 +265,45 @@ int main(){
 				specular = 0.0;
 			}
 
-			std::cout << "Ambient  x " <<planet2.objectAmbientFactor.x<<std::endl;
+			//std::cout << "Ambient  x " <<planet2.objectAmbientFactor.x<<std::endl;
 
 			//planet2.getTransform().setPosition(glm::vec3(0.0, 4, 0.0));
-		//	planet2.setLightningParameters(glm::vec3(ambient, ambient, ambient), glm::vec3(diffuse, diffuse, diffuse), glm::vec3(specular, specular, specular));
+		    //planet2.setLightningParameters(glm::vec3(ambient, ambient, ambient), glm::vec3(diffuse, diffuse, diffuse), glm::vec3(specular, specular, specular));
 
-			planet2.calculateNewCoordinates();
-			planet2.setTransform();
-			
-			planet3.calculateNewCoordinates();
-			planet3.setTransform();
+            for (int i = 1; i < numberPlanets; i++){
+                if (planets[i] != NULL){
+                    planets[i]->calculateNewCoordinates();
+                    planets[i]->setTransform();
+                }
+            }
+		
+            for (int i = 0; i < numberPlanets; i++)
+            {
+                for (int j = 0; j < numberPlanets; ++j)
+                {
+                    if (i != j)
+                    {
+                        if (planets[i] != NULL && planets[j] != NULL)
+                        {
+                            if (planets[i]->collision(planets[j]))
+                            {
+                                std::cout << "KOLIZJA" << std::endl;
+                                if (planets[i]->getMovementParameters().m > planets[j]->getMovementParameters().m)
+                                {
+                                    delete planets[j];
+                                    planets[j] = NULL;
+                                }
+                                else
+                                {
+                                    delete planets[i];
+                                    planets[i] = NULL;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
-			planet4.calculateNewCoordinates();
-			planet4.setTransform();
-			
 			time = 0;
 		}
 
@@ -278,13 +312,11 @@ int main(){
 		modelShader.Update(&farmTransform, &camera);
 		modelShader.updateLightning(glm::vec3(ambient, ambient, ambient), glm::vec3(diffuse, diffuse, diffuse), glm::vec3(specular, specular, specular));
 		farmModel.draw();*/
-		
-		planet4.drawComplex(camera);
-		planet3.drawComplex(camera);
 
-
-		planet.drawComplex(camera);
-		planet2.drawComplex(camera);
+        for (int i = 0; i < numberPlanets; i++){
+            if (planets[i] != NULL)
+                planets[i]->drawComplex(camera);
+        }
 
 		keyboard.moveCamera(camera, window, elapsedTime);
 		mouse.moveCamera(window, camera, elapsedTime);

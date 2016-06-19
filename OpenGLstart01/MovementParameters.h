@@ -183,8 +183,10 @@ public:
 	/// <param name="vStart">The v start.</param>
 	/// <param name="startingAngle">The starting angle.</param>
 	/// <param name="startingHigh">The starting high.</param>
+	/// <param name="radius">The radius.</param>
 	/// <param name="rotation">The rotation.</param>
-	void setStartingParameters(double vStart, double startingAngle, double startingHigh, glm::vec3 rotation);
+	void setStartingParameters(double vStart, double startingAngle, double startingHigh, double radius, glm::vec3 rotation);
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MovementParameters"/> class.
 	/// </summary>

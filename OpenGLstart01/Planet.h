@@ -103,8 +103,9 @@ public:
 	/// <param name="vStart">The starting velocity.</param>
 	/// <param name="startingAngle">The starting angle.</param>
 	/// <param name="startingHigh">The starting high.</param>
+	/// <param name="startingHigh">The radius.</param>
 	/// <param name="rotation">The rotation factor.</param>
-	void setStartingParameters(double vStart, double startingAngle, double startingHigh, glm::vec3 rotation);
+    void setStartingParameters(double vStart, double startingAngle, double startingHigh, double radius, glm::vec3 rotation);
 
 	
 	/// <summary>
@@ -141,10 +142,23 @@ public:
 	/// Updates uniforms variables in shader
 	/// </summary>
 	void updateLightningInShader();
+
+    /// <summary>
+    /// Detects a collision between two planets.
+    /// </summary>
+	/// <param name="planet">The object planet.</param>
+    /// <returns>true value when the collision occurred.</returns>
+    bool collision(Planet * planet);
 	
 	/// <summary>
 	/// Gets the shader.
 	/// </summary>
 	/// <returns>Shader &.</returns>
 	Shader & getShader();
+
+    /// <summary>
+    /// Gets the movementParameters.
+    /// </summary>
+    /// <returns>MovementParameters &.</returns>
+    MovementParameters & getMovementParameters();
 };

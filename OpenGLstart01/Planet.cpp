@@ -1,4 +1,5 @@
 #include "Planet.h"
+#include <cmath>
 
 Planet::Planet(const Model*model, Shader * shader){
 	this->model = model;
@@ -10,7 +11,7 @@ Planet::Planet(const Model*model, Shader * shader){
 void Planet::draw(){
 	model->draw();
 }
-Transform & Planet:: getTransform(){
+Transform & Planet::getTransform(){
 	return transform;
 }
 
@@ -22,8 +23,13 @@ void Planet::updateLightningInShader(){
 	shader->updateLightning(objectAmbientFactor, objectDiffuseFactor, objectSpecularFactor);
 }
 
-Shader& Planet:: getShader(){
+Shader& Planet::getShader(){
 	return *shader;
+}
+
+
+MovementParameters & Planet::getMovementParameters(){
+    return movementParameters;
 }
 
 /*
@@ -36,8 +42,8 @@ void Planet::drawComplex(Camera&camera){
 	model->draw();
 }
 
-void Planet::setStartingParameters(double vStart, double startingAngle, double startingHigh,glm::vec3 rotation){
-	movementParameters.setStartingParameters(vStart, startingAngle, startingHigh,rotation);
+void Planet::setStartingParameters(double vStart, double startingAngle, double startingHigh, double radius, glm::vec3 rotation){
+	movementParameters.setStartingParameters(vStart, startingAngle, startingHigh, radius, rotation);
 }
 
 void Planet::calculateNewCoordinates(){
@@ -49,8 +55,21 @@ void Planet::setTransform(){
 	transform.setPosition(movementParameters.positionToDraw);
 }
 
-void Planet:: setLightningParameters(glm::vec3 objectAmbientFactor, glm::vec3 objectDiffuseFactor, glm::vec3 objectSpecularFactor){
+void Planet::setLightningParameters(glm::vec3 objectAmbientFactor, glm::vec3 objectDiffuseFactor, glm::vec3 objectSpecularFactor){
 	this->objectAmbientFactor = objectAmbientFactor;
 	this->objectDiffuseFactor = objectDiffuseFactor;
 	this->objectSpecularFactor = objectSpecularFactor;
+}
+
+bool Planet::collision(Planet * planet){
+    if (planet != NULL)
+    {
+        double dx = this->getMovementParameters().positionToDraw.x - planet->getMovementParameters().positionToDraw.x;
+        double dy = this->getMovementParameters().positionToDraw.y - planet->getMovementParameters().positionToDraw.y;
+        double dz = this->getMovementParameters().positionToDraw.z - planet->getMovementParameters().positionToDraw.z;
+        double distance = sqrt(pow(dx, 2) + pow(dy, 2) + pow(dz, 2));
+        if (distance <= this->getMovementParameters().radius + planet->getMovementParameters().radius)
+            return true;
+    }
+    return false;
 }

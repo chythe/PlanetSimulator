@@ -8,13 +8,14 @@ MovementParameters::MovementParameters(){
 /*
 Maybe here could be parameters checker, if they are correct
 */
-void MovementParameters::setStartingParameters(double vStart, double startingAngle, double startingHigh, glm::vec3 rotation){
+void MovementParameters::setStartingParameters(double vStart, double startingAngle, double startingHigh, double radius, glm::vec3 rotation){
 
 	currentRotation = glm::vec3(0.0, 0.0, 0.0);
 	this->rotation = rotation;
 	this->vStart = vStart;
 	this->startingAngle = startingAngle;
 	this->startingHigh = startingHigh;
+    this->radius = radius;
 
 	t = 0;
 
