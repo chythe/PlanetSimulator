@@ -20,7 +20,13 @@
 #include <iostream>
 #include <vector>
 
+//SFML - GUI
+#include "SFML\Graphics.hpp"
+#include "SFGUI\SFGUI.hpp"
+#include "SFGUI\Widgets.hpp"
 
+
+//GUI m_gui;
 
 int window_width = 800;
 int window_height = 600;
@@ -29,6 +35,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void window_size_callback(GLFWwindow* window, int width, int height);
 void CursorPositionCallback(GLFWwindow* window, double cursorPositionX,double cursorPositionY);
 
+
+void addPlanet(std::vector<Planet*>* planets, std::vector<Model*>* models, Shader* modelShader);
+
+void addPlanetClick();
 
 double previousTime;
 double actualTime;
@@ -40,11 +50,19 @@ Mouse mouse;
 int numberModels = 4;
 int numberPlanets = 4;
 
+bool addNewPlanet = false;
+
 enum Type {
     SUN, GREEN, SAND, MOON
 };
 
 int main(){
+
+	//GUI
+	sf::RenderWindow guiWindow;
+	guiWindow.create(sf::VideoMode(300, 600), "Interface");
+
+	
 
     Planet objPlanet();
 
@@ -54,6 +72,25 @@ int main(){
 		glfwTerminate();
 		return 1;
 	}
+
+	guiWindow.resetGLStates();
+
+	sfg::SFGUI sfgui;
+	//auto button = sfg::Button::Create("Hello");
+
+	//button->GetSignal(sfg::Button::OnLeftClick).Connect(
+	//	std::bind(&addPlanetClick)
+	//	);
+
+	auto sfWindow = sfg::Window::Create();
+	sfWindow->SetTitle("Hello World example");
+
+	guiWindow.setActive(true);
+
+	//sfWindow->Add(button);
+
+	sfg::Desktop desktop;
+	desktop.Add(sfWindow);
 
 	//USTAWIENIA OKNA   opcja(jest to enum),wartoœæ jak¹ chcemy ustawiæ
 	glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
@@ -65,7 +102,7 @@ int main(){
 	//const GLFWvidmode* video_mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 	//GLFWwindow* window = glfwCreateWindow(video_mode->width, video_mode->height, "GL Window", glfwGetPrimaryMonitor(), NULL);
 	//tworzenie okna 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -92,10 +129,19 @@ int main(){
 	glViewport(0, 0, 800, 600); // wskazujemy gdzie znajduje sie lewy gorny róg oraz rozmiar okna, mo¿na to chyba pomin¹æ
 
 
+	//GUI
+	//m_gui.init("GUI");
+	//m_gui.loadScheme("WindowsLook.scheme");
+	//m_gui.setFont("DejaVuSans-10");
+	//m_gui.createWidget("WindowsLook/FrameWindow", glm::vec4(0.5f, 0.5f, 0.1f, 0.05f), glm::vec4(0.0f), "TestButton");
+	
+
+
 	
 	Shader modelShader("shaders/simpleModel");
 	modelShader.setTextureIndex(0);
 	modelShader.Bind();
+	
 	
 
     std::vector<Model*> models;
@@ -146,9 +192,6 @@ int main(){
 	glDepthFunc(GL_LESS);
 	glActiveTexture(GL_TEXTURE0);
 
-
-
-
 	float position = 0.0f;
 	float rotation = 0.0f;
 	float time = 0;
@@ -158,99 +201,56 @@ int main(){
 	float specular = 1.0;
 
 
-    //glm::mat4 m1(0);
-    //glm::mat4 m2(0);
 
-    //m1[0][0] = 1;
-    //m1[0][1] = 2;
-    //m1[0][2] = 4;
-    //m1[0][3] = 5;
-
-    //m1[1][0] = 12;
-    //m1[1][1] = 1;
-    //m1[1][2] = 6;
-    //m1[1][3] = 4;
-
-    //m1[2][0] = 1;
-    //m1[2][1] = 23;
-    //m1[2][2] = 11;
-    //m1[2][3] = 12;
-
-    //m1[3][0] = 10;
-    //m1[3][1] = 5;
-    //m1[3][2] = 9;
-    //m1[3][3] = 2;
+	
 
 
-    //m2[0][0] = 2;
-    //m2[0][1] = 3;
-    //m2[0][2] = 5;
-    //m2[0][3] = 5;
+	bool guiClosed = false;
+	
 
-    //m2[1][0] = 1;
-    //m2[1][1] = 6;
-    //m2[1][2] = 6;
-    //m2[1][3] = 4;
-
-    //m2[2][0] = 12;
-    //m2[2][1] = 2;
-    //m2[2][2] = 1;
-    //m2[2][3] = 12;
-
-    //m2[3][0] = 10;
-    //m2[3][1] = 11;
-    //m2[3][2] = 9;
-    //m2[3][3] = 4;
-
-    //Transform tmp;
-
-    //glm::mat4 m3(0);
-
-    //m3 = tmp.multipleMatrix(m2, m1);
-    //std::cout << std::endl;
-    //for (int i = 0; i < 4; i++)
-    //{
-    //    for (int j = 0; j < 4; j++)
-    //    {
-    //        std::cout << m3[i][j] << "\t";
-    //    }
-    //    std::cout << std::endl;
-    //}
-    //
-    //m3 = m1*m2;
-    //std::cout<<std::endl;
-    //for (int i = 0; i < 4; i++)
-    //{
-    //    for (int j = 0; j < 4; j++)
-    //    {
-    //        std::cout << m3[i][j] << "\t";
-    //    }
-    //    std::cout<<std::endl;
-    //}
-
-   
-
-    //system("pause");
-
-
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(window) && !guiClosed)
 	{
+		//GUI
+		guiWindow.setActive(true);
+		sf::Event event;
+		while (guiWindow.pollEvent(event)) {
+			desktop.HandleEvent(event);
+
+			if (event.type == sf::Event::Closed) {
+				guiWindow.close();
+				guiClosed = true;
+			}
+		}
+
+		desktop.Update(1.0f);
+
+		guiWindow.clear();
+		sfgui.Display(guiWindow);
+		guiWindow.display();
+
+
+
+		//OpenGL
+		glfwMakeContextCurrent(window);
+
+		if (addNewPlanet) {
+			addPlanet(&planets, &models, &modelShader);
+			addNewPlanet = false;
+		}
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);  // to konfiguruje kolor jaki uzyskamy po wywo³aniu glClear
 		glViewport(0, 0, window_width, window_height); // aktualizacja rozmiaru rzutni
 
-
 		previousTime = actualTime;
 		actualTime = glfwGetTime();
 		elapsedTime = actualTime - previousTime;
-
 
 		rotation += 0.001;
 		
 		time += 0.04;
 		if (time >= 0){
 		
-
 			//ambient += 0.0005;
 			//diffuse += 0.0005;
 			//specular+= 0.0005;
@@ -277,7 +277,7 @@ int main(){
                 }
             }
 		
-            for (int i = 0; i < numberPlanets; i++)
+            /*for (int i = 0; i < numberPlanets; i++)
             {
                 for (int j = 0; j < numberPlanets; ++j)
                 {
@@ -302,7 +302,7 @@ int main(){
                         }
                     }
                 }
-            }
+            }*/
 
 			time = 0;
 		}
@@ -317,6 +317,7 @@ int main(){
             if (planets[i] != NULL)
                 planets[i]->drawComplex(camera);
         }
+		//
 
 		keyboard.moveCamera(camera, window, elapsedTime);
 		mouse.moveCamera(window, camera, elapsedTime);
@@ -324,7 +325,6 @@ int main(){
 		
 		glfwSwapBuffers(window);// will swap the color buffer(a large buffer that contains color values for each pixel in GLFW's window) that has been used to draw in during this iteration and show it as output to the screen. 
 		glfwPollEvents(); //function checks if any events are triggered and calls the corresponding functions (which we can set via callback methods). We usually call eventprocessing functions at the start of a loop iteration.
-	
 	}
 
 	//glfwTerminate(); // zamykamy wszystkie utworzone przez glfw zasoby
@@ -333,6 +333,18 @@ int main(){
 //	system("pause");
 	return 0;
 	
+}
+
+void addPlanetClick() {
+	addNewPlanet = true;
+}
+
+void addPlanet(std::vector<Planet*>* planets, std::vector<Model*>* models, Shader *modelShader) {
+	Planet* planet = new Planet(models->at(GREEN), modelShader);
+	planet->setLightningParameters(glm::vec3(0.1, 0.1, 0.1), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0));
+	planet->setStartingParameters(4.5 * 1000, 0, 100, 3.0, glm::vec3(0.002, 0, 0));
+	numberPlanets++;
+	planets->push_back(planet);
 }
 
 //glBindVertexArray(model.vao);

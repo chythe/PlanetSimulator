@@ -62,6 +62,9 @@
     <ClCompile Include="MovementParameters.cpp">
       <Filter>Core\Source</Filter>
     </ClCompile>
+    <ClCompile Include="GUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mesh.h">
@@ -101,6 +104,7 @@
       <Filter>Core\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Samochod.h" />
+    <ClInclude Include="GUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Vertex_Shader.glsl">
