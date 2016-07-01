@@ -90,7 +90,6 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MovementParameters.h" />
     <ClInclude Include="Planet.h" />
-    <ClInclude Include="Samochod.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
