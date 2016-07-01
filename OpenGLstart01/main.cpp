@@ -9,17 +9,14 @@
 #include "Mouse.h"
 #include "Keyboard.h"
 #include "Transform.h"
-//#include "Camera.h"
 #include "Shader.h"
 #include "Vertex.h"
 #include "Mesh.h"
-//#include "Texture.h"
 #include "Planet.h"
 #include "MovementParameters.h"
 
 #include <iostream>
 #include <vector>
-
 
 
 int window_width = 800;
@@ -37,14 +34,60 @@ Camera camera;
 Keyboard keyboard;
 Mouse mouse;
 
-int numberModels = 4;
+int numberModels = 9;
 int numberPlanets = 4;
 
 enum Type {
-    SUN, GREEN, SAND, MOON
+	SUN,
+
+	GREEN,	//r: 3
+	SAND,	//r: 1.5
+	MOON,	//r: 3.5
+	EARTH,	//r: 1
+	VENUS,	//r: 1.2
+	BLUE,	//r: 1.7
+	PURPLE,	//r: 2.5
+	RED		//r: 0.5
 };
 
+
+//Create planet start
+bool		createModeFlag = false,
+			createFlag = false,
+			planetSelectionFlag = false,
+			velocitySelectionFlag = false,
+			angleSelectionFlag = false,
+			highSelectionFlag = false,
+			rotationFirstFlag = false,
+			rotationSecondFlag = false,
+			rotationThirdFlag = false;
+
+float		cVStart = 0.0,
+			cVStartAdd = 1.0,
+			cStartingAngle = 0.0,
+			cStartingAngleAdd = 1.0,
+			cStartingHigh = 0.0,
+			cStartingHighAdd = 1.0,
+			cRadius = 0.0,
+			cRotationAdd = 0.001;
+
+int			cPlanet = Type::GREEN;
+
+glm::vec3	cRotation = glm::vec3(0.0, 0.0, 0.0);
+
+
+void addNewPlanet(std::vector<Planet*>* planets, std::vector<Model*>* models, Shader *modelShader);
+void valueSelection(float* value, float* valueAdd, int key, int action);
+void displayInfo();
+//Create planet end
+
+
+
+
 int main(){
+
+	std::cout.unsetf(std::ios::floatfield);
+	std::cout.precision(8);
 
     Planet objPlanet();
 
@@ -76,7 +119,7 @@ int main(){
 	
 
 	// Set the required callback functions
-//	glfwSetKeyCallback(window, key_callback); // obsluga klawiszy
+	glfwSetKeyCallback(window, key_callback); // obsluga klawiszy
 	glfwSetWindowSizeCallback(window, window_size_callback); // obsluga zmiany rozmiaru okna 
 //	glfwSetCursorPosCallback(window, CursorPositionCallback);
 	
@@ -114,6 +157,21 @@ int main(){
         case MOON:
             models.push_back(new Model("Models/Moon/moon.dae"));
             break;
+		case EARTH:
+			models.push_back(new Model("Models/Earth/Earth.dae"));
+			break;
+		case VENUS:
+			models.push_back(new Model("Models/Venus/venus.dae"));
+			break;
+		case BLUE:
+			models.push_back(new Model("Models/Blue/blue.dae"));
+			break;
+		case PURPLE:
+			models.push_back(new Model("Models/Purple/purple.dae"));
+			break;
+		case RED:
+			models.push_back(new Model("Models/Red/red.dae"));
+			break;
         }
     }
 
@@ -137,7 +195,7 @@ int main(){
 	planets[SUN]->setLightningParameters(glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0));
 
 
-    planets[GREEN]->setStartingParameters(4.5 * 1000, 0, 100, 3.0, glm::vec3(0.002, 0, 0)); //green //100
+    planets[GREEN]->setStartingParameters(3.4 * 1000, 0, 500000 * 1000, 3.0, glm::vec3(0.002, 0, 0)); //green //100
     planets[SAND]->setStartingParameters(4.6 * 1000, 0, 200000 * 1000, 1.5, glm::vec3(0, 0, 0.009)); //sand //300000 * 1000
     planets[MOON]->setStartingParameters(5 * 1000, 0, 800000 * 1000, 3.5, glm::vec3(0, 0, 0.019)); //moon //800000 * 1000
 	
@@ -158,79 +216,6 @@ int main(){
 	float specular = 1.0;
 
 
-    //glm::mat4 m1(0);
-    //glm::mat4 m2(0);
-
-    //m1[0][0] = 1;
-    //m1[0][1] = 2;
-    //m1[0][2] = 4;
-    //m1[0][3] = 5;
-
-    //m1[1][0] = 12;
-    //m1[1][1] = 1;
-    //m1[1][2] = 6;
-    //m1[1][3] = 4;
-
-    //m1[2][0] = 1;
-    //m1[2][1] = 23;
-    //m1[2][2] = 11;
-    //m1[2][3] = 12;
-
-    //m1[3][0] = 10;
-    //m1[3][1] = 5;
-    //m1[3][2] = 9;
-    //m1[3][3] = 2;
-
-
-    //m2[0][0] = 2;
-    //m2[0][1] = 3;
-    //m2[0][2] = 5;
-    //m2[0][3] = 5;
-
-    //m2[1][0] = 1;
-    //m2[1][1] = 6;
-    //m2[1][2] = 6;
-    //m2[1][3] = 4;
-
-    //m2[2][0] = 12;
-    //m2[2][1] = 2;
-    //m2[2][2] = 1;
-    //m2[2][3] = 12;
-
-    //m2[3][0] = 10;
-    //m2[3][1] = 11;
-    //m2[3][2] = 9;
-    //m2[3][3] = 4;
-
-    //Transform tmp;
-
-    //glm::mat4 m3(0);
-
-    //m3 = tmp.multipleMatrix(m2, m1);
-    //std::cout << std::endl;
-    //for (int i = 0; i < 4; i++)
-    //{
-    //    for (int j = 0; j < 4; j++)
-    //    {
-    //        std::cout << m3[i][j] << "\t";
-    //    }
-    //    std::cout << std::endl;
-    //}
-    //
-    //m3 = m1*m2;
-    //std::cout<<std::endl;
-    //for (int i = 0; i < 4; i++)
-    //{
-    //    for (int j = 0; j < 4; j++)
-    //    {
-    //        std::cout << m3[i][j] << "\t";
-    //    }
-    //    std::cout<<std::endl;
-    //}
-
-   
-
-    //system("pause");
 
 
 	while (!glfwWindowShouldClose(window))
@@ -239,6 +224,11 @@ int main(){
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);  // to konfiguruje kolor jaki uzyskamy po wywo³aniu glClear
 		glViewport(0, 0, window_width, window_height); // aktualizacja rozmiaru rzutni
 
+		//Create planet	start
+		if (createFlag) {
+			addNewPlanet(&planets, &models, &modelShader);
+		}
+		//Create planet end
 
 		previousTime = actualTime;
 		actualTime = glfwGetTime();
@@ -377,4 +367,349 @@ void window_size_callback(GLFWwindow* window, int width, int height)
 {
 	window_width = width;
 	window_height = height;
+}
+
+
+/*
+Parametry do podania przy tworzeniu planety:
+-predkosc startowa
+-kat startowy
+-wysokosc startowa
+-promien
+-wektor rotacji
+
+Klawisze do obslugi:
+-C: wejscie w tryb tworzenia planety / wyjscie
+-Enter: dodanie planety
+-1: wybor planety
+
+*/
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
+
+
+	//On/Off planet creation
+	if (key == GLFW_KEY_C && action == GLFW_PRESS) {
+		if (!createModeFlag) {			
+			createModeFlag = true;
+
+			system("cls");
+			displayInfo();
+		}
+		else {
+			createModeFlag = false;
+
+			system("cls");
+			displayInfo();
+		}
+	}
+
+	//Creation
+	if (createModeFlag) {
+
+		//Confirm
+		if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
+			createFlag = true;
+
+			system("cls");
+			displayInfo();
+		}
+
+		//Option select
+		if (key == GLFW_KEY_1 && action == GLFW_PRESS) {
+			planetSelectionFlag = true;
+			velocitySelectionFlag = false;
+			angleSelectionFlag = false;
+			highSelectionFlag = false;
+			rotationFirstFlag = false;
+			rotationSecondFlag = false;
+			rotationThirdFlag = false;
+
+			system("cls");
+			displayInfo();
+		}
+		if (key == GLFW_KEY_2 && action == GLFW_PRESS) {
+			planetSelectionFlag = false;
+			velocitySelectionFlag = true;
+			angleSelectionFlag = false;
+			highSelectionFlag = false;
+			rotationFirstFlag = false;
+			rotationSecondFlag = false;
+			rotationThirdFlag = false;
+
+			system("cls");
+			displayInfo();
+		}
+		if (key == GLFW_KEY_3 && action == GLFW_PRESS) {
+			planetSelectionFlag = false;
+			velocitySelectionFlag = false;
+			angleSelectionFlag = true;
+			highSelectionFlag = false;
+			rotationFirstFlag = false;
+			rotationSecondFlag = false;
+			rotationThirdFlag = false;
+
+			system("cls");
+			displayInfo();
+		}
+		if (key == GLFW_KEY_4 && action == GLFW_PRESS) {
+			planetSelectionFlag = false;
+			velocitySelectionFlag = false;
+			angleSelectionFlag = false;
+			highSelectionFlag = true;
+			rotationFirstFlag = false;
+			rotationSecondFlag = false;
+			rotationThirdFlag = false;
+
+			system("cls");
+			displayInfo();
+		}
+		if (key == GLFW_KEY_5 && action == GLFW_PRESS) {
+			planetSelectionFlag = false;
+			velocitySelectionFlag = false;
+			angleSelectionFlag = false;
+			highSelectionFlag = false;
+			rotationFirstFlag = true;
+			rotationSecondFlag = false;
+			rotationThirdFlag = false;
+
+			system("cls");
+			displayInfo();
+		}
+		if (key == GLFW_KEY_6 && action == GLFW_PRESS) {
+			planetSelectionFlag = false;
+			velocitySelectionFlag = false;
+			angleSelectionFlag = false;
+			highSelectionFlag = false;
+			rotationFirstFlag = false;
+			rotationSecondFlag = true;
+			rotationThirdFlag = false;
+
+			system("cls");
+			displayInfo();
+		}
+		if (key == GLFW_KEY_7 && action == GLFW_PRESS) {
+			planetSelectionFlag = false;
+			velocitySelectionFlag = false;
+			angleSelectionFlag = false;
+			highSelectionFlag = false;
+			rotationFirstFlag = false;
+			rotationSecondFlag = false;
+			rotationThirdFlag = true;
+
+			system("cls");
+			displayInfo();
+		}
+
+		//Option edit
+		if (planetSelectionFlag) {
+			if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+				if (cPlanet >= 8) {
+					cPlanet = 1;
+				}
+				else {
+					cPlanet++;
+				}
+
+				system("cls");
+				displayInfo();
+			}
+			if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+				if (cPlanet <= 1) {
+					cPlanet = 8;
+				}
+				else {
+					cPlanet--;
+				}
+
+				system("cls");
+				displayInfo();
+			}
+		}
+		else if (velocitySelectionFlag) {
+			valueSelection(&cVStart, &cVStartAdd, key, action);
+			/*if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+				cVStart += cVStartAdd;
+
+				system("cls");
+				displayInfo();
+			}
+			if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+				cVStart -= cVStartAdd;
+
+				system("cls");
+				displayInfo();
+			}
+			if (key == GLFW_KEY_LEFT && action == GLFW_PRESS) {
+				cVStartAdd /= 10;
+
+				system("cls");
+				displayInfo();
+			}
+			if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS) {
+				cVStartAdd *= 10;
+
+				system("cls");
+				displayInfo();
+			}*/
+		}
+		else if (angleSelectionFlag) {
+			valueSelection(&cStartingAngle, &cStartingAngleAdd, key, action);
+		}
+		else if (highSelectionFlag) {
+			valueSelection(&cStartingHigh, &cStartingHighAdd, key, action);
+		}
+		else if (rotationFirstFlag) {
+			valueSelection(&cRotation.x, &cRotationAdd, key, action);
+		}
+		else if (rotationSecondFlag) {
+			valueSelection(&cRotation.y, &cRotationAdd, key, action);
+		}
+		else if (rotationThirdFlag) {
+			valueSelection(&cRotation.z, &cRotationAdd, key, action);
+		}
+	}
+}
+
+void valueSelection(float* value, float* valueAdd ,int key, int action) {
+	if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+		*value += *valueAdd;
+
+		system("cls");
+		displayInfo();
+	}
+	if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+		*value -= *valueAdd;
+
+		system("cls");
+		displayInfo();
+	}
+	if (key == GLFW_KEY_LEFT && action == GLFW_PRESS) {
+		*valueAdd /= 10;
+
+		system("cls");
+		displayInfo();
+	}
+	if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS) {
+		*valueAdd *= 10;
+
+		system("cls");
+		displayInfo();
+	}
+}
+
+void addNewPlanet(std::vector<Planet*>* planets, std::vector<Model*>* models, Shader *modelShader) {
+	Planet* planet = new Planet(models->at(cPlanet), modelShader);
+	planet->setLightningParameters(glm::vec3(0.1, 0.1, 0.1), glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0));
+
+
+	switch (cPlanet)
+	{
+	case GREEN:
+		cRadius = 3.0;
+		break;
+	case SAND:
+		cRadius = 1.5;
+		break;
+	case MOON:
+		cRadius = 3.5;
+		break;
+	case EARTH:
+		cRadius = 1.0;
+		break;
+	case VENUS:
+		cRadius = 1.2;
+		break;
+	case BLUE:
+		cRadius = 1.7;
+		break;
+	case PURPLE:
+		cRadius = 2.5;
+		break;
+	case RED:
+		cRadius = 0.5;
+		break;
+	}
+
+
+	planet->setStartingParameters(cVStart, cStartingAngle, cStartingHigh * 1000, cRadius, cRotation);
+
+	numberPlanets++;
+	planets->push_back(planet);
+	createFlag = false;
+	std::cout << "\n\nPlanet added" << std::endl;
+}
+
+void displayInfo() {
+	
+	if (createModeFlag) {
+		std::cout << "CREATION MODE ON\nKeys: 1-7: Select option\nEnter: Add planet\nKeys UP/DOWN/LEFT/RIGHT: Change values\n\n";
+
+		//Print selected atribute
+		std::cout << "Selected atribute: ";
+		if (planetSelectionFlag) {
+			std::cout << "Planet";
+		}
+		else if (velocitySelectionFlag) {
+			std::cout << "Velocity";
+		}
+		else if (angleSelectionFlag) {
+			std::cout << "Angle";
+		}
+		else if (highSelectionFlag) {
+			std::cout << "High";
+		}
+		else if (rotationFirstFlag) {
+			std::cout << "Rotation (x)";
+		}
+		else if (rotationSecondFlag) {
+			std::cout << "Rotation (y)";
+		}
+		else if(rotationThirdFlag) {
+			std::cout << "Rotation (z)";
+		}
+
+		std::cout << "\n\n";
+
+		//Print planet
+		std::cout << "[1]Planet: ";
+		switch (cPlanet)
+		{
+		case GREEN:
+			std::cout << "Green\n";
+			break;
+		case SAND:
+			std::cout << "Sand\n";
+			break;
+		case MOON:
+			std::cout << "Moon\n";
+			break;
+		case EARTH:
+			std::cout << "Earth\n";
+			break;
+		case VENUS:
+			std::cout << "Venus\n";
+			break;
+		case BLUE:
+			std::cout << "Blue\n";
+			break;
+		case PURPLE:
+			std::cout << "Purple\n";
+			break;
+		case RED:
+			std::cout << "Red\n";
+			break;
+		}
+
+		//Print velocity
+		std::cout << "[2]Velocity: " << cVStart << " (" << cVStartAdd << ")\n";
+
+		//Print angle
+		std::cout << "[3]Angle: " << cStartingAngle << " (" << cStartingAngleAdd << ")\n";
+
+		//Print High
+		std::cout << "[4]High: " << cStartingHigh << " * 1000 (" << cStartingHighAdd << ")\n";
+
+		//Print Rotation
+		std::cout << "[5-7]Rotation: ( " << cRotation.x << ", " << cRotation.y << ", " << cRotation.z << " ) ( " << cRotationAdd << ")\n";
+	}
 }

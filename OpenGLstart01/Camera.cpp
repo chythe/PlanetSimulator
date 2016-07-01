@@ -26,7 +26,7 @@ Camera::Camera(){
 	/*
 		Perspective Matrix
 	*/
-	perspectiveMatrix = glm::perspective(glm::radians(67.0f), (float)800 / (float)600, 0.1f, 100.0f);   
+	perspectiveMatrix = glm::perspective(glm::radians(67.0f), (float)800 / (float)600, 0.1f, 1000.0f);   
 }
 Camera::~Camera(){
 

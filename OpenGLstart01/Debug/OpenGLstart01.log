@@ -1,9 +1,43 @@
-﻿Build started 2016-06-17 19:00:35.
-     1>Project "D:\projektyProgramistyczne\C PROJEKTY\OpenGL\ProjektGK-master\ProjektGK\OpenGLstart01\OpenGLstart01.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         OpenGLstart01.vcxproj -> D:\projektyProgramistyczne\C PROJEKTY\OpenGL\ProjektGK-master\ProjektGK\Debug\OpenGLstart01.exe
-     1>Done Building Project "D:\projektyProgramistyczne\C PROJEKTY\OpenGL\ProjektGK-master\ProjektGK\OpenGLstart01\OpenGLstart01.vcxproj" (Build target(s)).
+﻿Build started 27.06.2016 22:46:47.
+     1>Project "C:\Users\Adam\Documents\Visual Studio 2013\Projects\ProjektGK\OpenGLstart01\OpenGLstart01.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Adam\Documents\Visual Studio 2013\Projects\ProjektGK\packages\Assimp.3.0.0\build\native\../..//build/native/include/" /I"D:\projektyProgramistyczne\C PROJEKTY\OpenGL\OpenGLstart01\OpenGLstart01\Dependencies\freeglut" /I"D:\projektyProgramistyczne\C PROJEKTY\OpenGL\OpenGLstart01\OpenGLstart01\Dependencies\glew" /I"D:\projektyProgramistyczne\C PROJEKTY\OpenGL\OpenGLstart01\OpenGLstart01\Dependencies\glfw" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(72): warning C4305: 'initializing' : truncation from 'double' to 'float'
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(149): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(152): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(155): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(158): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(161): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(164): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(167): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(170): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(173): warning C4316: 'Model' : object allocated on the heap may not be aligned 16
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(187): warning C4316: 'Planet' : object allocated on the heap may not be aligned 16
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(247): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(249): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(92): warning C4930: 'Planet objPlanet(void)': prototyped function not called (was a variable definition intended?)
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(610): warning C4316: 'Planet' : object allocated on the heap may not be aligned 16
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(629): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\adam\documents\visual studio 2013\projects\projektgk\openglstart01\main.cpp(632): warning C4305: '=' : truncation from 'double' to 'float'
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Adam\Documents\Visual Studio 2013\Projects\ProjektGK\Debug\OpenGLstart01.exe" /INCREMENTAL /NOLOGO /LIBPATH:Dependencies\assimp /LIBPATH:Dependencies\freeImage /LIBPATH:Dependencies\glm /LIBPATH:Dependencies\freeglut /LIBPATH:Dependencies\glew /LIBPATH:Dependencies\glfw "C:\Users\Adam\Documents\Visual Studio 2013\Projects\ProjektGK\packages\Assimp.3.0.0\build\native\../..//build/native/lib/Win32\assimp.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib assimp.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib opengl32.lib freeglut.lib glew32.lib glfw3.lib FreeImage.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Adam\Documents\Visual Studio 2013\Projects\ProjektGK\Debug\OpenGLstart01.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Adam\Documents\Visual Studio 2013\Projects\ProjektGK\Debug\OpenGLstart01.lib" /MACHINE:X86 Debug\Camera.obj
+         Debug\Keyboard.obj
+         Debug\main.obj
+         Debug\Model.obj
+         Debug\Mouse.obj
+         Debug\MovementParameters.obj
+         Debug\Planet.obj
+         Debug\Shader.obj
+         Debug\Mesh.obj
+         Debug\Texture.obj
+         Debug\Transform.obj
+         Debug\Vertex.obj
+         Debug\VerticesGroup.obj
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+         OpenGLstart01.vcxproj -> C:\Users\Adam\Documents\Visual Studio 2013\Projects\ProjektGK\Debug\OpenGLstart01.exe
+     1>Done Building Project "C:\Users\Adam\Documents\Visual Studio 2013\Projects\ProjektGK\OpenGLstart01\OpenGLstart01.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.10
+Time Elapsed 00:00:01.91
